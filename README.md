@@ -91,7 +91,7 @@ Add the following content:
 
 	scrape_configs:
   		- job_name: 'node_exporter'
-    	static_configs:
+    static_configs:
 		- targets: ['localhost:9100']
 
 **Verify Prometheus is Running:**
