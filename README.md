@@ -1,53 +1,56 @@
-# Setup-a-monitoring-solution-
-> **Deployment** **Documentation** **for** **Grafana** **and**
-> **Prometheus**
+\# Setup a Monitoring tools for DevOps
 
-**Overview:**
+\> \*\*Deployment Documentation for Grafana and Prometheus\*\*
+
+\## Overview
 
 This documentation provides a step-by-step guide for deploying Grafana
 and Prometheus on a server and configuring email alerts.
 
-**System** **Requirements:**
+\## System Requirements
 
-Server IP: 103.151.111.237
+\- \*\*Server IP:\*\* 103.151.111.237
 
-Operating System: Ubuntu 24.04
+\- \*\*Operating System:\*\* Ubuntu 24.04
 
-1\. Deploying Prometheus
+\## 1. Deploying Prometheus
 
-1\. 1 Install Prometheus
+\### 1.1 Install Prometheus
 
-**Download** **Prometheus:**
+\*\*Download Prometheus:\*\*
 
-w get
-[<u>https://github.com/prometheus/prometheus/releases/download/v2.43.0/prometheus-2.43.0.linux-amd64.tar.gz</u>](https://github.com/prometheus/prometheus/releases/download/v2.43.0/prometheus-2.43.0.linux-amd64.tar.gz)
+\`\`\`sh
 
-*Extract* *the* *Archive:*
+wget
+<https://github.com/prometheus/prometheus/releases/download/v2.43.0/prometheus-2.43.0.linux-amd64.tar.gz>\
+\
+**Extract the Archive:**
 
-tar -xvzf Prometheus-2.43.0.linux-amd64.tar.gz
+tar -xvzf prometheus-2.43.0.linux-amd64.tar.gz
 
-cd Prometheus-2.43.0.linux-amd64
+cd prometheus-2.43.0.linux-amd64
 
-*Move* *Binaries:*
+**Move Binaries:**
 
-sudo mv Prometheus /usr/local/bin/
+sudo mv prometheus /usr/local/bin/
 
 sudo mv promtool /usr/local/bin/
 
-*Create* *Prometheus* *Configuration* *Directory:*
+**Create Prometheus Configuration Directory:**
 
-sudo mkdir /etc/Prometheus
+sudo mkdir /etc/prometheus
 
-*Move* *Configuration* *Files:*
+**Move Configuration Files:**
 
-sudo mv prometheus.yml Thank you for your business! We look forward to
-working with you again.etc/prometheus/
+sudo mv prometheus.yml /etc/prometheus/
 
-*Create* *Prometheus* *Service* *File:*
+**Create Prometheus Service File:**
 
 sudo nano /etc/systemd/system/prometheus.service
 
-*Add* *the* *following* *content:*
+Add the following content:
+
+\[Unit\]
 
 Description=Prometheus
 
@@ -55,186 +58,160 @@ Wants=network-online.target
 
 After=network-online.target
 
-Service
+\[Service\]
 
 User=root
 
-ExecStart=/usr/local/bin/prometheus \\
+ExecStart=/usr/local/bin/prometheus
+\--config.file=/etc/prometheus/prometheus.yml
 
-> --config.file=/etc/prometheus/prometheus.yml
-
-Install
+\[Install\]
 
 WantedBy=multi-user.target
 
-*Start* *and* *Enable* *Prometheus* *Service:*
+**Start and Enable Prometheus Service:**
 
 sudo systemctl daemon-reload
 
 sudo systemctl start prometheus
 
-sudo systemctl enable Prometheus
+sudo systemctl enable prometheus
 
-**1.2** **Configure** **Prometheus**
+### 1.2 Configure Prometheus
 
-Edit Configuration File:
+****Edit Configuration File:****
 
 sudo nano /etc/prometheus/prometheus.yml
 
-*Example* *configuration:*
+Example configuration:
 
 global:
 
-> scrape_interval: 15s
+scrape_interval: 15s
 
 scrape_configs:
 
-> \- job_name: 'node_exporter'
->
-> static_configs:
+ - job_name: \'node_exporter\'
 
-\- targets: \['localhost:9100'\]
+static_configs:
 
-*Verify* *Prometheus* *is* *Running:*
+\- targets: \[\'localhost:9100\'\]
+
+**Verify Prometheus is Running:**
 
 Open your browser and go to
-[<u>http://103.151.111.237:9090</u>.](http://103.151.111.237:9090/)
+[http://103.151.111.237:9090](http://103.151.111.237:9090/).
 
-**2.** **Deploying** **Grafana**
+## 2. Deploying Grafana
 
-*2.1* *Install* *Grafana*
+### 2.1 Install Grafana
 
-*Add* *Grafana* *APT* *Repository:*
+**Add Grafana APT Repository:**
 
 sudo apt-get install -y software-properties-common
 
-sudo add-apt-repository "deb https://packages.grafana.com/oss/deb stable
-main"
+sudo add-apt-repository \"deb https://packages.grafana.com/oss/deb
+stable main\"
 
-*Add* *Grafana* *GPG* *Key:*
+**Add Grafana GPG Key:**
 
 wget -q -O - https://packages.grafana.com/gpg.key \| sudo apt-key add -
 
-*Install* *Grafana:*
+**Install Grafana:**
 
 sudo apt-get update
 
 sudo apt-get install grafana
 
-*Start* *and* *Enable* *Grafana* *Service:*
+**Start and Enable Grafana Service:**
 
 sudo systemctl start grafana-server
 
 sudo systemctl enable grafana-server
 
-**2.2** **Configure** **Grafana**
+### 2.2 Configure Grafana
 
-*Access* *Grafana:*
+****Access Grafana:****
 
-Open your browser and go to http://103.151.111.237:3000.
+****Open your browser and go to
+****[****http://103.151.111.237:3000****](http://103.151.111.237:3000/)****.\
+Default Credentials: *****admin/admin*****
 
-Default Credentials: admin/admin
+**Add Prometheus Data Source:**
 
-*Add* *Prometheus* *Data* *Source:*
+1.  Navigate to Configuration -\> Data Sources.
+2.  Click Add data source.
+3.  Choose Prometheus from the list.
+4.  Set the URL to *http://localhost:9090*.
+5.  Click Save & Test.
 
-Navigate to Configuration -\> Data Sources.
+**Create Dashboards and Panels:**
 
-Click Add data source.
+1.  Go to + -\> Create -\> Dashboard.
+2.  Click Add new panel.
+3.  Configure panels with Prometheus queries.
 
-Choose Prometheus from the list.
+## ****3. Configure Email Alerts****
 
-Set the URL to http://localhost:9090.
+### ****3.1 Set Up Email Contact Points****
 
-Click Save & Test.
+**Navigate to Contact Points:**
 
-*Create* *Dashboards* *and* *Panels:*
+1.  ****In Grafana, go to Alerting -\> Contact points.****
+2.  Click New contact point.
 
-Go to + -\> Create -\> Dashboard.
+**Configure Email Contact Point:**
 
-Click Add new panel.
+-   **Name:** Enter a name (e.g., \"Email Alerts\").
+-   **Type:** Select Email.
+-   **Email addresses:** Enter the email address(es) to receive alerts.
+-   **Save Contact Point:** Click Save contact point.
 
-Configure panels with Prometheus queries.
+### 3.2 Set Up Notification Policies
 
-**3.** **Configure** **Email** **Alerts**
+**Navigate to Notification Policies:**
 
-*3.1* *Set* *Up* *Email* *Contact* *Points.*
+1.  Go to Alerting -\> Notification policies.
 
-*Navigate* *to* *Contact* *Points:*
-
-In Grafana, go to Alerting -\> Contact points.
-
-Click New contact point.
-
-*Configure* *Email* *Contact* *Point:*
-
-Name: Enter a name (e.g., "Email Alerts").
-
-Type: Select Email.
-
-Email addresses: Enter the email address(es) to receive alerts.
-
-Save Contact Point: Click Save contact point.
-
-**3.2** **Set** **Up** **Notification** **Policies**
-
-*Navigate* *to* *Notification* *Policies:*
-
-Go to Alerting -\> Notification policies.
-
-*Add* *a* *New* *Child* *Policy:*
+**Add a New Child Policy:**
 
 Click New child policy.
 
-Group: Choose the alert group or keep it as Default.
+1.  **Group:** Choose the alert group or keep it as Default.
+2.  **Contact Point:** Select the contact point you created (e.g.,
+    \"Email Alerts\").
+3.  **Conditions:** Configure conditions as needed.
+4.  **Save Policy:** Click Save child policy.
 
-Contact Point: Select the contact point you created (e.g., "Email
-Alerts").
+### 3.3 Create Alert Rules
 
-Conditions: Configure conditions as needed.
+**Navigate to Your Dashboard:**
 
-Save Policy: Click Save child policy.
+1.  Go to the dashboard where you want to add alerts.
 
-**3.3** **Create** **Alert** **Rules**
+**Add an Alert to a Panel:**
 
-*Navigate* *to* *Your* *Dashboard:*
+1.  Click on the panel you want to set an alert for.
+2.  Click the bell icon or go to Alert -\> Create alert rule.
 
-Go to the dashboard where you want to add alerts.
+**Configure the Alert Rule:**
 
-*Add* *an* *Alert* *to* *a* *Panel:*
+-   **Name:** Enter a name for the alert rule.
 
-Click on the panel you want to set an alert for.
+-   **Condition:** Define the condition for the alert (e.g., when a
+    metric exceeds a threshold).
 
-Click the bell icon or go to Alert -\> Create alert rule.
+-   **Expression:** For example,
+    *rate(node_cpu_seconds_total{mode=\"system\"}\[5m\]) \> 0.8*
 
-*Configure* *the* *Alert* *Rule:*
+-   **Condition:** IS ABOVE 80 (for CPU usage).
 
-Name: Enter a name for the alert rule.
+-   **Evaluation:** Set how frequently the alert should be evaluated.
 
-Condition: Define the condition for the alert (e.g., when a metric
-exceeds a threshold).
+    -   **Evaluate every:** 1m (1 minute)
+    -   **For:** 5m (5 minutes)
 
-Expression: For example,
-rate(node_cpu_seconds_total{mode="system"}\[5m\]) \> 0.8
+-   **Notifications:** Choose the notification policy you created (e.g.,
+    \"Email Alerts\").
 
-Condition: IS ABOVE 80 (for CPU usage).
-
-Evaluation: Set how frequently the alert should be evaluated.
-
-Evaluate every: 1m (1 minute)
-
-For: 5m (5 minutes)
-
-Notifications: Choose the notification policy you created (e.g., "Email
-Alerts").
-
-Save Alert Rule: Click Save.
-
-> Team Members
-
-Muhammad Bilal
-
-Muhammad Waqas
-
-Muhammad Ibtahaj Ali Butt
-
-Chaudhary Daim
+-   **Save Alert Rule:** Click Save.
