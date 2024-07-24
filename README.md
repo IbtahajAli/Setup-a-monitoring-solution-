@@ -30,25 +30,25 @@ cd prometheus-2.43.0.linux-amd64
 
 **Move Binaries:**
 
-sudo mv prometheus /usr/local/bin/
+*sudo mv prometheus /usr/local/bin/*
 
-sudo mv promtool /usr/local/bin/
+*sudo mv promtool /usr/local/bin/*
 
 **Create Prometheus Configuration Directory:**
 
-sudo mkdir /etc/prometheus
+*sudo mkdir /etc/prometheus*
 
 **Move Configuration Files:**
 
-sudo mv prometheus.yml /etc/prometheus/
+*sudo mv prometheus.yml /etc/prometheus/*
 
 **Create Prometheus Service File:**
 
-sudo nano /etc/systemd/system/prometheus.service
+*sudo nano /etc/systemd/system/prometheus.service*
 
 Add the following content:
 
-\[Unit\]
+*\[Unit\]
 
 Description=Prometheus
 
@@ -65,21 +65,21 @@ ExecStart=/usr/local/bin/prometheus
 
 \[Install\]
 
-WantedBy=multi-user.target
+WantedBy=multi-user.target*
 
 **Start and Enable Prometheus Service:**
 
-sudo systemctl daemon-reload
+*sudo systemctl daemon-reload*
 
-sudo systemctl start prometheus
+*sudo systemctl start prometheus*
 
-sudo systemctl enable prometheus
+*sudo systemctl enable prometheus*
 
 ### 1.2 Configure Prometheus
 
 ****Edit Configuration File:****
 
-sudo nano /etc/prometheus/prometheus.yml
+*sudo nano /etc/prometheus/prometheus.yml*
 
 Example configuration:
 
@@ -106,26 +106,26 @@ Open your browser and go to
 
 **Add Grafana APT Repository:**
 
-sudo apt-get install -y software-properties-common
+*sudo apt-get install -y software-properties-common*
 
-sudo add-apt-repository \"deb https://packages.grafana.com/oss/deb
-stable main\"
+*sudo add-apt-repository \"deb https://packages.grafana.com/oss/deb
+stable main\"*
 
 **Add Grafana GPG Key:**
 
-wget -q -O - https://packages.grafana.com/gpg.key \| sudo apt-key add -
+*wget -q -O - https://packages.grafana.com/gpg.key \| sudo apt-key add -*
 
 **Install Grafana:**
 
-sudo apt-get update
+*sudo apt-get update**
 
-sudo apt-get install grafana
+*sudo apt-get install grafana*
 
 **Start and Enable Grafana Service:**
 
-sudo systemctl start grafana-server
+*sudo systemctl start grafana-server*
 
-sudo systemctl enable grafana-server
+*sudo systemctl enable grafana-server*
 
 ### 2.2 Configure Grafana
 
