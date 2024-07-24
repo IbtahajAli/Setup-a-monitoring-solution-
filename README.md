@@ -48,7 +48,7 @@ cd prometheus-2.43.0.linux-amd64
 
 Add the following content:
 
-*\[Unit\]
+\[Unit\]
 
 Description=Prometheus
 
@@ -65,7 +65,7 @@ ExecStart=/usr/local/bin/prometheus
 
 \[Install\]
 
-WantedBy=multi-user.target*
+WantedBy=multi-user.target
 
 **Start and Enable Prometheus Service:**
 
