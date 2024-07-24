@@ -19,8 +19,6 @@ and Prometheus on a server and configuring email alerts.
 
 *\*Download Prometheus:\*\*
 
-`\`\`sh
-
 wget
 <https://github.com/prometheus/prometheus/releases/download/v2.43.0/prometheus-2.43.0.linux-amd64.tar.gz>\
 \
