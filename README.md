@@ -1,25 +1,25 @@
-\# Setup a Monitoring tools for DevOps
+# Setup a Monitoring tools for DevOps
 
-\> \*\*Deployment Documentation for Grafana and Prometheus\*\*
+> \*\*Deployment Documentation for Grafana and Prometheus\*\*
 
-\## Overview
+## Overview
 
 This documentation provides a step-by-step guide for deploying Grafana
 and Prometheus on a server and configuring email alerts.
 
-\## System Requirements
+## System Requirements
 
-\- \*\*Server IP:\*\* 103.151.111.237
+- \*\*Server IP:\*\* 103.151.111.237
 
-\- \*\*Operating System:\*\* Ubuntu 24.04
+- \*\*Operating System:\*\* Ubuntu 24.04
 
-\## 1. Deploying Prometheus
+## 1. Deploying Prometheus
 
-\### 1.1 Install Prometheus
+### 1.1 Install Prometheus
 
-\*\*Download Prometheus:\*\*
+*\*Download Prometheus:\*\*
 
-\`\`\`sh
+`\`\`sh
 
 wget
 <https://github.com/prometheus/prometheus/releases/download/v2.43.0/prometheus-2.43.0.linux-amd64.tar.gz>\
