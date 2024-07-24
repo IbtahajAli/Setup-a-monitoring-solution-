@@ -20,13 +20,13 @@ and Prometheus on a server and configuring email alerts.
 *\*Download Prometheus:\*\*
 
 	wget
-	<https://github.com/prometheus/prometheus/releases/download/v2.43.0/prometheus-2.43.0.linux-amd64.tar.gz>\
-\
+	<https://github.com/prometheus/prometheus/releases/download/v2.43.0/prometheus-2.43.0.linux-amd64.tar.gz>
+
 **Extract the Archive:**
 
 	tar -xvzf prometheus-2.43.0.linux-amd64.tar.gz
 
-cd prometheus-2.43.0.linux-amd64
+	cd prometheus-2.43.0.linux-amd64
 
 **Move Binaries:**
 
@@ -48,30 +48,33 @@ cd prometheus-2.43.0.linux-amd64
 
 Add the following content:
 
-	\[Unit\]
-
+	[Unit]
 	Description=Prometheus
-
 	Wants=network-online.target
-
 	After=network-online.target
 
-	\[Service\]
-
+	[Service]
 	User=root
+	ExecStart=/usr/local/bin/prometheus --config.file=/etc/prometheus/prometheus.yml
 
-	ExecStart=/usr/local/bin/prometheus
-	\--config.file=/etc/prometheus/prometheus.yml
+	[Install]
+	WantedBy=multi-user.target[Unit]
+	Description=Prometheus
+	Wants=network-online.target
+	After=network-online.target
 
-	\[Install\]
+	[Service]
+	User=root
+	ExecStart=/usr/local/bin/prometheus --config.file=/etc/prometheus/prometheus.yml
 
+	[Install]
 	WantedBy=multi-user.target
 
 **Start and Enable Prometheus Service:**
 
 	sudo systemctl daemon-reload
 
-*sudo systemctl start prometheus*
+	sudo systemctl start prometheus
 
 	sudo systemctl enable prometheus
 
@@ -81,19 +84,15 @@ Add the following content:
 
 	sudo nano /etc/prometheus/prometheus.yml
 
-	Example configuration:
+**Example configuration:**
 
 	global:
-
-	scrape_interval: 15s
+  		scrape_interval: 15s
 
 	scrape_configs:
-
- 	- job_name: \'node_exporter\'
-
-	static_configs:
-
-	\- targets: \[\'localhost:9100\'\]
+  		- job_name: 'node_exporter'
+    	static_configs:
+		- targets: ['localhost:9100']
 
 **Verify Prometheus is Running:**
 
@@ -132,7 +131,7 @@ Open your browser and go to
 ****Access Grafana:****
 
 ****Open your browser and go to
-****[****http://103.151.111.237:3000****](http://103.151.111.237:3000/)****.\
+****[****http://103.151.111.237:3000****](http://103.151.111.237:3000/)****.
 Default Credentials: *****admin/admin*****
 
 **Add Prometheus Data Source:**
